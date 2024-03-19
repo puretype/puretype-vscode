@@ -1,15 +1,27 @@
 {
   "name": "puretype",
-  "displayName": "puretype",
+  "displayName": "PureType",
   "description": "Intelligent functional assistant",
+  "publisher": "puretype",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.86.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/puretype/puretype-vscode"
+  },
+  "icon": "images/logo.png",
+  "galleryBanner": {
+    "color": "#042F1C",
+    "theme": "light"
+  },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onLanguage:elixir"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
