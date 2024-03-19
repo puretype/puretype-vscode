@@ -19,7 +19,9 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onLanguage:elixir"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
