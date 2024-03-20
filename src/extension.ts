@@ -1,4 +1,5 @@
 import Auth from "./common/auth";
+import { authenticatedFetch } from "./common/fetch";
 import * as vscode from "vscode";
 
 const LOGIN_URI = vscode.Uri.parse(
@@ -39,6 +40,16 @@ export async function activate(
       await vscode.env.openExternal(uri);
     }
   }
+
+  const authFetch = authenticatedFetch(auth);
+  await authFetch("https://app.puretype.ai/logs", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      system: "vscode",
+      messages: [{ level: "info", message: "Hello from VS Code" }],
+    }),
+  });
 }
 
 export function deactivate() {}
