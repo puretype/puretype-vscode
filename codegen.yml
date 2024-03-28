@@ -1,0 +1,6 @@
+overwrite: true
+schema: "schemas/schema.json"
+generates:
+  types/puretype-vscode/graphql.d.ts:
+    plugins:
+      - "typescript"
