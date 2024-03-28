@@ -1,6 +1,7 @@
+import { gql } from "@apollo/client/core";
 import Auth from "./common/auth";
-import { authenticatedFetch } from "./common/fetch";
 import * as vscode from "vscode";
+import GraphQLClient from "./common/graphql";
 
 const LOGIN_URI = vscode.Uri.parse(
   "https://app.puretype.ai/user/login?return_url=vscode://puretype.puretype",
@@ -41,14 +42,18 @@ export async function activate(
     }
   }
 
-  const authFetch = authenticatedFetch(auth);
-  await authFetch("https://app.puretype.ai/logs", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      system: "vscode",
-      messages: [{ level: "info", message: "Hello from VS Code" }],
-    }),
+  const graphqlClient = new GraphQLClient(auth);
+  await graphqlClient.client.query({
+    query: gql`
+      {
+        analyze(code: "fn x -> x.f end", language: "elixir") {
+          line
+          column
+          code
+          explanation
+        }
+      }
+    `,
   });
 }
 
