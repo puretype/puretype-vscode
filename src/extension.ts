@@ -1,10 +1,12 @@
 import { gql } from "@apollo/client/core";
 import Auth from "./common/auth";
+import { PURETYPE_APP_BASE } from "./common/constants";
 import * as vscode from "vscode";
 import GraphQLClient from "./common/graphql";
 
-const LOGIN_URI = vscode.Uri.parse(
-  "https://app.puretype.ai/user/login?return_url=vscode://puretype.puretype",
+const LOGIN_URI = vscode.Uri.joinPath(
+  PURETYPE_APP_BASE,
+  "/user/login?return_url=vscode://puretype.puretype",
 );
 
 class AuthenticationUriHandler implements vscode.UriHandler {
