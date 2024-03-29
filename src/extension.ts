@@ -3,6 +3,7 @@ import Auth from "./common/auth";
 import { PURETYPE_APP_BASE } from "./common/constants";
 import * as vscode from "vscode";
 import GraphQLClient from "./common/graphql";
+import { PureTypeCodeActionProvider } from "./code-action";
 
 const LOGIN_URI = vscode.Uri.joinPath(
   PURETYPE_APP_BASE,
@@ -44,19 +45,10 @@ export async function activate(
     }
   }
 
-  const graphqlClient = new GraphQLClient(auth);
-  await graphqlClient.client.query({
-    query: gql`
-      {
-        analyze(code: "fn x -> x.f end", language: "elixir") {
-          line
-          column
-          code
-          explanation
-        }
-      }
-    `,
-  });
+  vscode.languages.registerCodeActionsProvider(
+    { scheme: "file", language: "elixir" },
+    new PureTypeCodeActionProvider(),
+  );
 }
 
 export function deactivate() {}
