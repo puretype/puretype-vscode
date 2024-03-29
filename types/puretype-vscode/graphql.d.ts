@@ -14,12 +14,19 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Position = {
+  __typename?: 'Position';
+  column: Scalars['Int']['output'];
+  row: Scalars['Int']['output'];
+};
+
 export type Recommendation = {
   __typename?: 'Recommendation';
-  code: Scalars['String']['output'];
-  column: Scalars['Int']['output'];
-  explanation: Scalars['String']['output'];
-  line: Scalars['Int']['output'];
+  end: Position;
+  message: Scalars['String']['output'];
+  replacement: Scalars['String']['output'];
+  start: Position;
+  type: Scalars['String']['output'];
 };
 
 export type RootQueryType = {
