@@ -3,6 +3,7 @@ import { PURETYPE_APP_BASE } from "./common/constants";
 import * as vscode from "vscode";
 import { PureTypeCodeActionProvider } from "./code-action";
 import { PureTypeHoverProvider } from "./hover";
+import { Analyzer } from "./analyzer";
 
 const LOGIN_URI = vscode.Uri.joinPath(
   PURETYPE_APP_BASE,
@@ -44,14 +45,16 @@ export async function activate(
     }
   }
 
+  const analyzer = new Analyzer(auth);
+
   vscode.languages.registerCodeActionsProvider(
     { scheme: "file", language: "elixir" },
-    new PureTypeCodeActionProvider(),
+    new PureTypeCodeActionProvider(analyzer),
   );
 
   vscode.languages.registerHoverProvider(
     { scheme: "file", language: "elixir" },
-    new PureTypeHoverProvider(),
+    new PureTypeHoverProvider(analyzer),
   );
 }
 
