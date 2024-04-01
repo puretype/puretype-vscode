@@ -9,6 +9,6 @@ export class PureTypeHoverProvider implements vscode.HoverProvider {
     position: vscode.Position,
     token: vscode.CancellationToken,
   ): vscode.ProviderResult<vscode.Hover> {
-    return new vscode.Hover("Hello, world!");
+    return this.analyzer.getHover(document, position);
   }
 }
