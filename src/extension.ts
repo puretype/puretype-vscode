@@ -1,9 +1,8 @@
-import { gql } from "@apollo/client/core";
 import Auth from "./common/auth";
 import { PURETYPE_APP_BASE } from "./common/constants";
 import * as vscode from "vscode";
-import GraphQLClient from "./common/graphql";
 import { PureTypeCodeActionProvider } from "./code-action";
+import { PureTypeHoverProvider } from "./hover";
 
 const LOGIN_URI = vscode.Uri.joinPath(
   PURETYPE_APP_BASE,
@@ -48,6 +47,11 @@ export async function activate(
   vscode.languages.registerCodeActionsProvider(
     { scheme: "file", language: "elixir" },
     new PureTypeCodeActionProvider(),
+  );
+
+  vscode.languages.registerHoverProvider(
+    { scheme: "file", language: "elixir" },
+    new PureTypeHoverProvider(),
   );
 }
 
