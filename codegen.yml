@@ -1,6 +1,8 @@
 overwrite: true
 schema: "schemas/schema.json"
+documents: "src/**/*.graphql"
 generates:
   types/puretype-vscode/graphql.d.ts:
     plugins:
       - "typescript"
+      - "typescript-operations"

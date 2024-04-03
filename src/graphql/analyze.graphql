@@ -1,0 +1,15 @@
+query ($code: String!) {
+  analyze(code: $code, language: "elixir") {
+    type
+    start {
+      row
+      column
+    }
+    end {
+      row
+      column
+    }
+    replacement
+    message
+  }
+}
