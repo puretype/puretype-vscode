@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import GraphQLClient from "./common/graphql";
 import Auth from "./common/auth";
+import analyzeQuery from "./graphql/analyze.graphql";
 import { sha256 } from "js-sha256";
 import * as vscode from "vscode";
 
@@ -46,23 +47,7 @@ export class Analyzer {
     const {
       data: { analyze },
     } = await this.client.client.query({
-      query: gql`
-        query ($code: String!) {
-          analyze(code: $code, language: "elixir") {
-            type
-            start {
-              row
-              column
-            }
-            end {
-              row
-              column
-            }
-            replacement
-            message
-          }
-        }
-      `,
+      query: analyzeQuery,
       variables: { code },
     });
 

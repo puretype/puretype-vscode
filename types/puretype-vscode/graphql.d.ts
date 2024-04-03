@@ -39,3 +39,10 @@ export type RootQueryTypeAnalyzeArgs = {
   code: Scalars['String']['input'];
   language: Scalars['String']['input'];
 };
+
+export type Unnamed_1_QueryVariables = Exact<{
+  code: Scalars['String']['input'];
+}>;
+
+
+export type Unnamed_1_Query = { __typename?: 'RootQueryType', analyze: Array<{ __typename?: 'Recommendation', type: string, replacement: string, message: string, start: { __typename?: 'Position', row: number, column: number }, end: { __typename?: 'Position', row: number, column: number } }> };
