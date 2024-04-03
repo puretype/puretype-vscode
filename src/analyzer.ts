@@ -15,11 +15,14 @@ export class Analyzer {
   ): vscode.ProviderResult<vscode.Hover> {
     return this.getResults(textDocument).then((results: any) => {
       for (const result of results) {
-        console.log({
-          position,
-          start: result.start,
-          end: result.end,
-        });
+        const start = new vscode.Position(
+          result.start.row,
+          result.start.column,
+        );
+        const end = new vscode.Position(result.end.row, result.end.column);
+        if (position.isAfterOrEqual(start) && position.isBeforeOrEqual(end)) {
+          return new vscode.Hover(new vscode.MarkdownString(result.message));
+        }
       }
 
       return null;
