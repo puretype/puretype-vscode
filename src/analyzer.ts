@@ -1,4 +1,3 @@
-import gql from "graphql-tag";
 import GraphQLClient from "./common/graphql";
 import Auth from "./common/auth";
 import analyzeQuery from "./graphql/analyze.graphql";
