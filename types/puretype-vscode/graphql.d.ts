@@ -46,3 +46,13 @@ export type Unnamed_1_QueryVariables = Exact<{
 
 
 export type Unnamed_1_Query = { __typename?: 'RootQueryType', analyze: Array<{ __typename?: 'Recommendation', type: string, replacement: string, message: string, start: { __typename?: 'Position', row: number, column: number }, end: { __typename?: 'Position', row: number, column: number } }> };
+
+
+declare module '*/analyze.graphql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  
+
+  export default defaultDocument;
+}
+    
