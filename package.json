@@ -47,6 +47,8 @@
   "devDependencies": {
     "@apollo/client": "3.9.7",
     "@graphql-codegen/cli": "5.0.2",
+    "@graphql-codegen/client-preset": "4.2.5",
+    "@graphql-codegen/typed-document-node": "5.0.6",
     "@graphql-codegen/typescript": "4.0.6",
     "@graphql-codegen/typescript-resolvers": "4.0.6",
     "@types/mocha": "^10.0.6",
