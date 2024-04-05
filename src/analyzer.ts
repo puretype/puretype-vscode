@@ -85,5 +85,8 @@ export class Analyzer {
   }
 
   private client: GraphQLClient;
-  private resultsCache: Map<string, { hash: string; results: any }> = new Map();
+  private resultsCache: Map<
+    string,
+    { hash: string; results: AnalysisIssue[] }
+  > = new Map();
 }
