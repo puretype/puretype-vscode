@@ -9,10 +9,10 @@ export class Analyzer {
     this.client = new GraphQLClient(auth);
   }
 
-  getHover(
+  getIssue(
     textDocument: vscode.TextDocument,
     position: vscode.Position,
-  ): vscode.ProviderResult<vscode.Hover> {
+  ): vscode.ProviderResult<any> {
     return this.getResults(textDocument).then((results: any) => {
       for (const result of results) {
         const start = new vscode.Position(
@@ -21,7 +21,7 @@ export class Analyzer {
         );
         const end = new vscode.Position(result.end.row, result.end.column);
         if (position.isAfterOrEqual(start) && position.isBeforeOrEqual(end)) {
-          return new vscode.Hover(new vscode.MarkdownString(result.message));
+          return result;
         }
       }
 
