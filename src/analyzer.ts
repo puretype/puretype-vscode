@@ -35,24 +35,27 @@ export class Analyzer {
     this.client = new GraphQLClient(auth);
   }
 
-  getIssue(
+  async getIssue(
     textDocument: vscode.TextDocument,
-    position: vscode.Position,
+    positionOrRange: vscode.Position | vscode.Range,
   ): Promise<AnalysisIssue | null> {
-    return this.getIssues(textDocument).then((results) => {
-      for (const result of results) {
-        const start = new vscode.Position(
-          result.start.row,
-          result.start.column,
-        );
-        const end = new vscode.Position(result.end.row, result.end.column);
-        if (position.isAfterOrEqual(start) && position.isBeforeOrEqual(end)) {
-          return result;
-        }
-      }
+    const results = await this.getIssues(textDocument);
+    for (const result of results) {
+      const start = new vscode.Position(result.start.row, result.start.column);
+      const end = new vscode.Position(result.end.row, result.end.column);
+      const range = new vscode.Range(start, end);
 
-      return null;
-    });
+      if (
+        (positionOrRange instanceof vscode.Position &&
+          positionOrRange.isAfterOrEqual(start) &&
+          positionOrRange.isBeforeOrEqual(end)) ||
+        (positionOrRange instanceof vscode.Range &&
+          range.contains(positionOrRange))
+      ) {
+        return result;
+      }
+    }
+    return null;
   }
 
   async getIssues(
