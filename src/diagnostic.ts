@@ -40,14 +40,14 @@ export class PureTypeDiagnostics {
     this.analyzer.getIssues(file).then((issues) => {
       const diagnostics: vscode.Diagnostic[] = [];
 
-      for (const issue of issues) {
+      for (const { start, end, summary } of issues) {
         const range = new vscode.Range(
-          new vscode.Position(issue.start.row, issue.start.column),
-          new vscode.Position(issue.end.row, issue.end.column),
+          new vscode.Position(start.row, start.column),
+          new vscode.Position(end.row, end.column),
         );
         const diagnostic = new vscode.Diagnostic(
           range,
-          "Short summary",
+          summary,
           vscode.DiagnosticSeverity.Warning,
         );
         diagnostics.push(diagnostic);
