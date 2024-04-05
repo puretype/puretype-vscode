@@ -28,6 +28,8 @@ const ANALYZE_QUERY = graphql(`
   }
 `);
 
+export type AnalysisIssue = AnalyzeCodeQuery["analyze"][number];
+
 export class Analyzer {
   constructor(auth: Auth) {
     this.client = new GraphQLClient(auth);
@@ -36,8 +38,8 @@ export class Analyzer {
   getIssue(
     textDocument: vscode.TextDocument,
     position: vscode.Position,
-  ): vscode.ProviderResult<any> {
-    return this.getIssues(textDocument).then((results: any) => {
+  ): Promise<AnalysisIssue | null> {
+    return this.getIssues(textDocument).then((results) => {
       for (const result of results) {
         const start = new vscode.Position(
           result.start.row,
@@ -53,7 +55,9 @@ export class Analyzer {
     });
   }
 
-  async getIssues(textDocument: vscode.TextDocument): Promise<any> {
+  async getIssues(
+    textDocument: vscode.TextDocument,
+  ): Promise<readonly AnalysisIssue[]> {
     const code = textDocument.getText();
     const hash = sha256(code);
     const cached = this.resultsCache.get(textDocument.fileName);

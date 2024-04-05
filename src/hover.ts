@@ -9,8 +9,8 @@ export class PureTypeHoverProvider implements vscode.HoverProvider {
     position: vscode.Position,
     token: vscode.CancellationToken,
   ): vscode.ProviderResult<vscode.Hover> {
-    return this.analyzer.getIssue(document, position).then((issue: any) => {
-      if (!issue) {
+    return this.analyzer.getIssue(document, position).then((issue) => {
+      if (issue === null || issue.expanded === null) {
         return null;
       }
 
@@ -19,7 +19,7 @@ export class PureTypeHoverProvider implements vscode.HoverProvider {
         new vscode.Position(issue.end.row, issue.end.column),
       );
 
-      return new vscode.Hover(new vscode.MarkdownString(issue.message), range);
+      return new vscode.Hover(new vscode.MarkdownString(issue.expanded), range);
     });
   }
 }
