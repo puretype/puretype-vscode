@@ -2,8 +2,9 @@ import Auth from "./common/auth";
 import { PURETYPE_APP_BASE } from "./common/constants";
 import * as vscode from "vscode";
 import { PureTypeCodeActionProvider } from "./code-action";
-import { PureTypeHoverProvider } from "./hover";
+import { PureTypeDiagnostics } from "./diagnostic";
 import { Analyzer } from "./analyzer";
+import { PureTypeHoverProvider } from "./hover";
 
 const LOGIN_URI = vscode.Uri.joinPath(
   PURETYPE_APP_BASE,
@@ -56,6 +57,9 @@ export async function activate(
     { scheme: "file", language: "elixir" },
     new PureTypeHoverProvider(analyzer),
   );
+
+  const diagnostics = new PureTypeDiagnostics(analyzer);
+  diagnostics.activate(context);
 }
 
 export function deactivate() {}

@@ -13,7 +13,7 @@ export class Analyzer {
     textDocument: vscode.TextDocument,
     position: vscode.Position,
   ): vscode.ProviderResult<any> {
-    return this.getResults(textDocument).then((results: any) => {
+    return this.getIssues(textDocument).then((results: any) => {
       for (const result of results) {
         const start = new vscode.Position(
           result.start.row,
@@ -29,7 +29,7 @@ export class Analyzer {
     });
   }
 
-  private async getResults(textDocument: vscode.TextDocument): Promise<any> {
+  async getIssues(textDocument: vscode.TextDocument): Promise<any> {
     const code = textDocument.getText();
     const hash = sha256(code);
     const cached = this.resultsCache.get(textDocument.fileName);
