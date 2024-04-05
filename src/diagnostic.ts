@@ -9,6 +9,21 @@ export class PureTypeDiagnostics {
       vscode.languages.createDiagnosticCollection("puretype");
     context.subscriptions.push(diagnosticCollection);
 
+    if (vscode.window.activeTextEditor) {
+      void this.updateDiagnostics(
+        vscode.window.activeTextEditor.document,
+        diagnosticCollection,
+      );
+    }
+
+    context.subscriptions.push(
+      vscode.window.onDidChangeActiveTextEditor((editor) => {
+        if (editor) {
+          void this.updateDiagnostics(editor.document, diagnosticCollection);
+        }
+      }),
+    );
+
     vscode.workspace.onDidOpenTextDocument((document) => {
       void this.updateDiagnostics(document, diagnosticCollection);
     });
