@@ -1,10 +1,8 @@
 import * as vscode from "vscode";
 import { Analyzer } from "./analyzer";
 
-class PureTypeCodeAction extends vscode.CodeAction {}
-
 export class PureTypeCodeActionProvider
-  implements vscode.CodeActionProvider<PureTypeCodeAction>
+  implements vscode.CodeActionProvider<vscode.CodeAction>
 {
   constructor(private analyzer: Analyzer) {}
 
@@ -14,6 +12,17 @@ export class PureTypeCodeActionProvider
     context: vscode.CodeActionContext,
     token: vscode.CancellationToken,
   ): vscode.ProviderResult<vscode.CodeAction[]> {
-    return [];
+    return this.analyzer.getIssue(document, range).then((issue) => {
+      if (!issue || !issue.action) {
+        return [];
+      }
+
+      return [
+        new vscode.CodeAction(
+          issue.action.summary,
+          vscode.CodeActionKind.QuickFix,
+        ),
+      ];
+    });
   }
 }
