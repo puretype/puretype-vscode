@@ -1,8 +1,32 @@
 import gql from "graphql-tag";
 import GraphQLClient from "./common/graphql";
 import Auth from "./common/auth";
+import { graphql } from "../src/gql";
 import { sha256 } from "js-sha256";
 import * as vscode from "vscode";
+import { AnalyzeCodeQuery } from "./gql/graphql";
+
+const ANALYZE_QUERY = graphql(`
+  query analyzeCode($code: String!) {
+    analyze(code: $code, language: "elixir") {
+      type
+      start {
+        row
+        column
+      }
+      end {
+        row
+        column
+      }
+      summary
+      expanded
+      action {
+        summary
+        replacement
+      }
+    }
+  }
+`);
 
 export class Analyzer {
   constructor(auth: Auth) {
@@ -42,27 +66,11 @@ export class Analyzer {
     return results;
   }
 
-  async analyze(code: string): Promise<any> {
+  async analyze(code: string): Promise<AnalyzeCodeQuery["analyze"]> {
     const {
       data: { analyze },
     } = await this.client.client.query({
-      query: gql`
-        query ($code: String!) {
-          analyze(code: $code, language: "elixir") {
-            type
-            start {
-              row
-              column
-            }
-            end {
-              row
-              column
-            }
-            replacement
-            message
-          }
-        }
-      `,
+      query: ANALYZE_QUERY,
       variables: { code },
     });
 

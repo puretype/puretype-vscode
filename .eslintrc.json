@@ -29,6 +29,7 @@
     "ignorePatterns": [
         "out",
         "dist",
+        "src/gql/*.ts",
         "**/*.d.ts"
     ]
 }
