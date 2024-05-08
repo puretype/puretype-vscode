@@ -14,7 +14,7 @@
   "icon": "images/logo.png",
   "galleryBanner": {
     "color": "#042F1C",
-    "theme": "light"
+    "theme": "dark"
   },
   "categories": [
     "Other"
@@ -23,14 +23,6 @@
     "onLanguage:elixir"
   ],
   "main": "./dist/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "puretype.helloWorld",
-        "title": "Hello World"
-      }
-    ]
-  },
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "webpack",
