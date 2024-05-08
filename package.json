@@ -14,7 +14,7 @@
   "icon": "images/logo.png",
   "galleryBanner": {
     "color": "#042F1C",
-    "theme": "light"
+    "theme": "dark"
   },
   "categories": [
     "Other"
