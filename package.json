@@ -1,7 +1,7 @@
 {
   "name": "puretype",
   "displayName": "PureType",
-  "description": "Intelligent functional assistant",
+  "description": "Intelligent assistant to accelerate your knowledge, one function at a time",
   "publisher": "puretype",
   "version": "0.0.1",
   "engines": {
