@@ -17,7 +17,8 @@
     "theme": "dark"
   },
   "categories": [
-    "Other"
+    "Linters",
+    "Education"
   ],
   "activationEvents": [
     "onLanguage:elixir"
