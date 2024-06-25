@@ -1,11 +1,15 @@
 {
   "name": "puretype",
   "displayName": "PureType",
-  "description": "Intelligent functional assistant",
+  "description": "Intelligent assistant to accelerate your knowledge, one function at a time",
   "publisher": "puretype",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.86.0"
+  },
+  "bugs": {
+    "url": "https://github.com/puretype/puretype-vscode/issues",
+    "email": "support@puretype.ai"
   },
   "repository": {
     "type": "git",
@@ -17,7 +21,8 @@
     "theme": "dark"
   },
   "categories": [
-    "Other"
+    "Linters",
+    "Education"
   ],
   "activationEvents": [
     "onLanguage:elixir"
