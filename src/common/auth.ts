@@ -9,6 +9,10 @@ export default class Auth {
     this.secrets.store("accessToken", accessToken);
   }
 
+  clearAccessToken(): void {
+    this.secrets.delete("accessToken");
+  }
+
   getAccessToken(): Thenable<string | undefined> {
     return this.secrets.get("accessToken");
   }

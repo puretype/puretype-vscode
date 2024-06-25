@@ -58,6 +58,10 @@ export async function activate(
     new PureTypeHoverProvider(analyzer),
   );
 
+  vscode.commands.registerCommand("puretype.logout", () => {
+    auth.clearAccessToken();
+  });
+
   const diagnostics = new PureTypeDiagnostics(analyzer);
   diagnostics.activate(context);
 }
