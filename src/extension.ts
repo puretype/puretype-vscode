@@ -6,10 +6,9 @@ import { PureTypeDiagnostics } from "./diagnostic";
 import { Analyzer } from "./analyzer";
 import { PureTypeHoverProvider } from "./hover";
 
-const LOGIN_URI = vscode.Uri.joinPath(
-  PURETYPE_APP_BASE,
-  "/user/login?return_url=vscode://puretype.puretype",
-);
+const LOGIN_URI = vscode.Uri.joinPath(PURETYPE_APP_BASE, "/user/login").with({
+  query: "return_url=vscode://puretype.puretype",
+});
 
 class AuthenticationUriHandler implements vscode.UriHandler {
   constructor(private readonly auth: Auth) {}
