@@ -7,8 +7,8 @@ import * as vscode from "vscode";
 import { AnalyzeCodeQuery } from "./gql/graphql";
 
 const ANALYZE_QUERY = graphql(`
-  query analyzeCode($code: String!) {
-    analyze(code: $code, language: "elixir") {
+  query analyzeCode($code: String!, $language: String!) {
+    analyze(code: $code, language: $language) {
       type
       start {
         row
@@ -68,17 +68,20 @@ export class Analyzer {
       return cached.results;
     }
 
-    const results = await this.analyze(code);
+    const results = await this.analyze(code, textDocument.languageId);
     this.resultsCache.set(textDocument.fileName, { hash, results });
     return results;
   }
 
-  async analyze(code: string): Promise<AnalyzeCodeQuery["analyze"]> {
+  async analyze(
+    code: string,
+    language: string,
+  ): Promise<AnalyzeCodeQuery["analyze"]> {
     const {
       data: { analyze },
     } = await this.client.client.query({
       query: ANALYZE_QUERY,
-      variables: { code },
+      variables: { code, language },
     });
 
     return analyze;
