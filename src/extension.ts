@@ -5,6 +5,8 @@ import { PureTypeCodeActionProvider } from "./code-action";
 import { PureTypeDiagnostics } from "./diagnostic";
 import { Analyzer } from "./analyzer";
 import { PureTypeHoverProvider } from "./hover";
+import { setupNotifications } from "./notifications";
+import GraphQLClient from "./common/graphql";
 
 const LOGIN_URI = vscode.Uri.joinPath(PURETYPE_APP_BASE, "/user/login").with({
   query: "return_url=vscode://puretype.puretype",
@@ -45,7 +47,8 @@ export async function activate(
     }
   }
 
-  const analyzer = new Analyzer(auth);
+  const graphqlClient = new GraphQLClient(auth);
+  const analyzer = new Analyzer(graphqlClient);
 
   vscode.languages.registerCodeActionsProvider(
     { scheme: "file", language: "elixir" },
@@ -63,6 +66,8 @@ export async function activate(
 
   const diagnostics = new PureTypeDiagnostics(analyzer);
   diagnostics.activate(context);
+
+  setupNotifications(graphqlClient);
 }
 
 export function deactivate() {}

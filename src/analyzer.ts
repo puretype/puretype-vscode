@@ -1,6 +1,4 @@
-import gql from "graphql-tag";
 import GraphQLClient from "./common/graphql";
-import Auth from "./common/auth";
 import { graphql } from "../src/gql";
 import { sha256 } from "js-sha256";
 import * as vscode from "vscode";
@@ -31,8 +29,8 @@ const ANALYZE_QUERY = graphql(`
 export type AnalysisIssue = AnalyzeCodeQuery["analyze"][number];
 
 export class Analyzer {
-  constructor(auth: Auth) {
-    this.client = new GraphQLClient(auth);
+  constructor(client: GraphQLClient) {
+    this.client = client;
   }
 
   async getIssue(
