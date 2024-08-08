@@ -5,8 +5,13 @@ import * as vscode from "vscode";
 import { AnalyzeCodeQuery } from "./gql/graphql";
 
 const ANALYZE_QUERY = graphql(`
-  query analyzeCode($code: String!, $language: String!) {
-    analyze(code: $code, language: $language) {
+  query analyzeCode(
+    $code: String!
+    $language: String!
+    $repo: String
+    $path: String
+  ) {
+    analyze(code: $code, language: $language, repo: $repo, path: $path) {
       type
       start {
         row
