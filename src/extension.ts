@@ -36,6 +36,10 @@ export async function activate(
   const authUriHandler = new AuthenticationUriHandler(auth);
   context.subscriptions.push(vscode.window.registerUriHandler(authUriHandler));
 
+  auth.onAccessTokenSet(() => {
+    initialiseExtension(context, auth);
+  });
+
   const accessToken = await auth.getAccessToken();
   if (!accessToken) {
     const actionToTake = await vscode.window.showInformationMessage(
@@ -48,8 +52,15 @@ export async function activate(
       const uri = await vscode.env.asExternalUri(LOGIN_URI);
       await vscode.env.openExternal(uri);
     }
+  } else {
+    initialiseExtension(context, auth);
   }
+}
 
+export function initialiseExtension(
+  context: vscode.ExtensionContext,
+  auth: Auth,
+) {
   const graphqlClient = new GraphQLClient(auth);
   const analyzer = new Analyzer(graphqlClient);
 
