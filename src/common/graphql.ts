@@ -8,6 +8,9 @@ import { Uri } from "vscode";
 
 export default class GraphQLClient {
   constructor(auth: Auth) {
+    // https://github.com/apollographql/apollo-client/issues/11063
+    (global as any).WebSocket = WebSocket;
+
     const link = new GraphQLWsLink(
       createClient({
         url: Uri.joinPath(PURETYPE_APP_BASE, "/gql/websocket").toString(),
