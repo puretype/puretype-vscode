@@ -4,6 +4,14 @@ All notable changes to the "puretype" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## 0.0.4
+
+- WebSocket stil referenced (globally) in error code lookup (#65)
+- show error on missing access token (#66)
+- depend on the ElixirLS to provide the `elixir` filetype for now (#67)
+- present the authentication dialog on logout (#68)
+- basic Sentry setup (#69)
+
 ## 0.0.3
 
 - pass repo and file context to backend (#60)
