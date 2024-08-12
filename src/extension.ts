@@ -7,6 +7,9 @@ import { Analyzer } from "./analyzer";
 import { PureTypeHoverProvider } from "./hover";
 import { setupNotifications } from "./notifications";
 import GraphQLClient from "./common/graphql";
+import { initialiseSentry } from "./common/sentry";
+
+import * as Sentry from "@sentry/node";
 
 const LOGIN_URI = vscode.Uri.joinPath(PURETYPE_APP_BASE, "/user/login").with({
   query: "return_url=vscode://puretype.puretype",
@@ -32,6 +35,8 @@ class AuthenticationUriHandler implements vscode.UriHandler {
 export async function activate(
   context: vscode.ExtensionContext,
 ): Promise<void> {
+  initialiseSentry();
+
   const auth = new Auth(context);
   const authUriHandler = new AuthenticationUriHandler(auth);
   context.subscriptions.push(vscode.window.registerUriHandler(authUriHandler));
