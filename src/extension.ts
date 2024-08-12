@@ -40,20 +40,28 @@ export async function activate(
     initialiseExtension(context, auth);
   });
 
+  auth.onAccessTokenClear(() => {
+    void proposeExtensionAuthentication();
+  });
+
   const accessToken = await auth.getAccessToken();
   if (!accessToken) {
-    const actionToTake = await vscode.window.showInformationMessage(
-      `Authenticate with PureType`,
-      { modal: false },
-      { title: "Login" },
-    );
-
-    if (actionToTake?.title === "Login") {
-      const uri = await vscode.env.asExternalUri(LOGIN_URI);
-      await vscode.env.openExternal(uri);
-    }
+    await proposeExtensionAuthentication();
   } else {
     initialiseExtension(context, auth);
+  }
+}
+
+export async function proposeExtensionAuthentication() {
+  const actionToTake = await vscode.window.showInformationMessage(
+    `Authenticate with PureType`,
+    { modal: false },
+    { title: "Login" },
+  );
+
+  if (actionToTake?.title === "Login") {
+    const uri = await vscode.env.asExternalUri(LOGIN_URI);
+    await vscode.env.openExternal(uri);
   }
 }
 
