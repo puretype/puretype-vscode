@@ -17,14 +17,14 @@ class AuthenticationUriHandler implements vscode.UriHandler {
 
   handleUri(uri: vscode.Uri): vscode.ProviderResult<void> {
     const searchParams = new URLSearchParams(uri.query);
-    if (searchParams.has("access_token")) {
-      const accessToken = searchParams.get("access_token");
-      if (accessToken) {
-        this.auth.storeAccessToken(accessToken);
-        vscode.window.showInformationMessage(
-          "Successfully authenticated with PureType!",
-        );
-      }
+    const accessToken = searchParams.get("access_token");
+    if (accessToken) {
+      this.auth.storeAccessToken(accessToken);
+      vscode.window.showInformationMessage(
+        "Successfully authenticated with PureType!",
+      );
+    } else {
+      vscode.window.showErrorMessage("Failed to authenticate with PureType");
     }
   }
 }
